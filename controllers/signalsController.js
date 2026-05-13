@@ -4,7 +4,7 @@ const timezoneConverter = require('../services/timezoneConverter');
 /**
  * POST /api/signals/mxn
  */
-exports.generateMXNSignals = async (req, res) => {
+exports.generateGoldSignals = async (req, res) => {
   try {
     const { uid, deviceId, timezone } = req.body;
 
