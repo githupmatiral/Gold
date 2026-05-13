@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'OK', 
-    service: 'MXN Signals Backend',
+    service: 'GOLD Signals Backend',
     version: '1.0.0',
     timestamp: new Date().toISOString()
   });
@@ -39,12 +39,12 @@ app.get('/ping', (req, res) => {
 
 app.get('/', (req, res) => {
   res.status(200).json({ 
-    message: 'FER3OON MXN Signals API',
+    message: 'FER3OON GOLD Signals API',
     version: '1.0.0',
     status: 'running',
     endpoints: {
       health: '/health',
-      signals: '/api/signals/mxn',
+      signals: '/api/signals/gold',
       upcoming: '/api/signals/upcoming',
       clearCache: '/api/signals/clear-cache'
     }
@@ -53,6 +53,12 @@ app.get('/', (req, res) => {
 
 // API Routes
 app.use('/api/signals', signalsRoutes);
+
+// Start background signal refresh
+const signalAnalyzer = require('./services/signalAnalyzer');
+setTimeout(() => {
+  signalAnalyzer.startBackgroundRefresh();
+}, 1000);
 
 // 404 handler
 app.use((req, res) => {
@@ -73,7 +79,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 MXN Signals Backend running on port ${PORT}`);
+  console.log(`🚀 GOLD Signals Backend running on port ${PORT}`);
   console.log(`📡 Environment: ${process.env.NODE_ENV}`);
   console.log(`🤖 Bot URL: ${process.env.BOT_URL}`);
   console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || '*'}`);
